@@ -27,6 +27,7 @@ public class PhotonLobby : MonoBehaviourPunCallbacks {
     public override void OnConnectedToMaster()
     {
         Debug.Log("Connected to the Photon master server");
+        PhotonNetwork.AutomaticallySyncScene = true;
         statusText.text = "Conectado!!";
         battleButton.SetActive(true);
     }
@@ -40,7 +41,7 @@ public class PhotonLobby : MonoBehaviourPunCallbacks {
     void CreateRoom()
     {
         int randomRoomName = Random.Range(0, 10000); //Mira con la cara que te mira conan, esto puede tirar 2 nombres iguales
-        RoomOptions roomops = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = 10 };
+        RoomOptions roomops = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = (byte)MultiplayerSettings.Instance.maxPlayer };
         PhotonNetwork.CreateRoom("Room" + randomRoomName, roomops);
     }
 
@@ -61,10 +62,6 @@ public class PhotonLobby : MonoBehaviourPunCallbacks {
         Debug.Log("Se entro a un lobby");
     }
 
-    public override void OnJoinedRoom()
-    {
-        Debug.Log("Se entro a un room");
-    }
     public void OnCancelButtonClicked()
     {
         cancelButton.SetActive(false);
