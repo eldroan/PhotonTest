@@ -223,6 +223,6 @@ public class PhotonRoom : MonoBehaviourPunCallbacks {
     [PunRPC]
     private void RPC_CreatePlayer()
     {
-        PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonNetworkPlayer"), transform.position /*No importa en el ejemplo*/, Quaternion.identity /*No importa en el ejemplo*/, 0 /*No importa en el ejemplo*/);
+        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonNetworkPlayer"), transform.position /*No importa en el ejemplo*/, Quaternion.identity /*No importa en el ejemplo*/, 0 /*No importa en el ejemplo*/);
     }
 }

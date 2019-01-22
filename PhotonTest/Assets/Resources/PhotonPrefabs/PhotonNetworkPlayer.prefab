@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 33983074115186974}
   - component: {fileID: 23463718628521570}
   - component: {fileID: 114851096296874330}
+  - component: {fileID: 114884592141213408}
   m_Layer: 0
   m_Name: PhotonNetworkPlayer
   m_TagString: Untagged
@@ -105,3 +106,18 @@ MonoBehaviour:
   viewIdField: 0
   InstantiationId: 1
   isRuntimeInstantiated: 0
+--- !u!114 &114884592141213408
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1949423847425298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3556b7f8d7af75a45baba316d3abae3c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isMyTurn: 0
+  nick: 
+  esMiTurno: {fileID: 0}
+  minick: {fileID: 0}
