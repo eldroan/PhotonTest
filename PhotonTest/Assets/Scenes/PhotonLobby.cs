@@ -21,7 +21,7 @@ public class PhotonLobby : MonoBehaviourPunCallbacks {
     private void Start()
     {
         statusText.text = "Conectando..";
-        PhotonNetwork.ConnectUsingSettings(); //Setear la version en PhotonServerSettings
+        PhotonNetwork.ConnectUsingSettings(); //Se conecta usando el asset PhotonServerSettings donde tambien esta la version (diferentes versiones nop juegan juntos)
     }
 
     public override void OnConnectedToMaster()
@@ -40,7 +40,7 @@ public class PhotonLobby : MonoBehaviourPunCallbacks {
 
     void CreateRoom()
     {
-        int randomRoomName = Random.Range(0, 10000); //Mira con la cara que te mira conan, esto puede tirar 2 nombres iguales
+        int randomRoomName = Random.Range(0, 10000); 
         RoomOptions roomops = new RoomOptions() { IsVisible = true, IsOpen = true, MaxPlayers = (byte)MultiplayerSettings.Instance.maxPlayer };
         PhotonNetwork.CreateRoom("Room" + randomRoomName, roomops);
     }
@@ -54,7 +54,7 @@ public class PhotonLobby : MonoBehaviourPunCallbacks {
     public void OnBattleButtonClicked()
     {
         battleButton.SetActive(false);
-        cancelButton.SetActive(true);
+        //cancelButton.SetActive(true);
         PhotonNetwork.JoinRandomRoom(); 
     }
     public override void OnJoinedLobby()
@@ -63,9 +63,10 @@ public class PhotonLobby : MonoBehaviourPunCallbacks {
     }
 
     public void OnCancelButtonClicked()
-    {
-        cancelButton.SetActive(false);
-        battleButton.SetActive(true);
-        PhotonNetwork.LeaveRoom();
+    {//Ripeado el boton de cancelar
+        //cancelButton.SetActive(false);
+        //battleButton.SetActive(true);
+        //PhotonNetwork.LeaveRoom();
+        
     }
 }
