@@ -3,6 +3,13 @@
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
+ 
+PhotonTest/Library/*
+PhotonTest/[Tt]emp/
+PhotonTest/[Oo]bj/
+PhotonTest/[Bb]uild/
+PhotonTest/[Bb]uilds/
+PhotonTest/.vs/*
 Assets/AssetStoreTools*
 
 # Visual Studio cache directory
