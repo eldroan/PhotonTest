@@ -27,7 +27,6 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
     private bool readyToCount;
     private bool readyToStart;
     public float startingTime;
-    private float lessThanMaxPlayers;
     private float atMaxPlayer;
     private float timeToStart;
 
@@ -54,7 +53,6 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
         pv = GetComponent<PhotonView>();
         readyToCount = false;
         readyToStart = false;
-        lessThanMaxPlayers = startingTime;
         atMaxPlayer = DefaultWaitTimeToStartGameWhenRoomIsFull; //Cuenta regresiva que arranca de 5
         timeToStart = startingTime;
     }
@@ -84,14 +82,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
             if (readyToStart)
             {
                 atMaxPlayer -= Time.deltaTime;
-                lessThanMaxPlayers = atMaxPlayer;
                 timeToStart = atMaxPlayer;
-                Debug.Log("Display time to start to the players " + timeToStart);
-            }
-            else if (readyToCount)
-            {
-                lessThanMaxPlayers -= Time.deltaTime;
-                timeToStart = lessThanMaxPlayers;
                 Debug.Log("Display time to start to the players " + timeToStart);
             }
         
@@ -187,7 +178,6 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
     }
     private void RestartTimer()
     {
-        lessThanMaxPlayers = startingTime;
         timeToStart = startingTime;
         atMaxPlayer = DefaultWaitTimeToStartGameWhenRoomIsFull;
         readyToStart = false;
