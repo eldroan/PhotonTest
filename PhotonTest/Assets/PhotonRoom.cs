@@ -188,15 +188,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
     private void RPC_LoadedGameScene()
     {
         playersInGame++;
-        if (playersInGame == PhotonNetwork.PlayerList.Length)
-        {
-            pv.RPC("RPC_CreatePlayer", RpcTarget.All);
-        }
     }
 
-    [PunRPC]
-    private void RPC_CreatePlayer()
-    {
-        //PhotonNetwork.Instantiate(Path.Combine("PhotonPrefabs", "PhotonNetworkPlayer"), transform.position /*No importa en el ejemplo*/, Quaternion.identity /*No importa en el ejemplo*/, 0 /*No importa en el ejemplo*/);
-    }
+    
 }

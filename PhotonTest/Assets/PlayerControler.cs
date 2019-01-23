@@ -27,13 +27,11 @@ public class PlayerControler : MonoBehaviour {
         {
             if (Input.GetKeyDown(KeyCode.A))
             {
-                Debug.Log("Se apreto localmente A");
                 pv.RPC("RPC_PressButton", RpcTarget.All, nick, "A");
                 isMyTurn = false;
             }
             else if (Input.GetKeyDown(KeyCode.S))
             {
-                Debug.Log("Se apreto localmente S");
                 pv.RPC("RPC_PressButton", RpcTarget.All, nick, "S");
                 isMyTurn = false;
             }
