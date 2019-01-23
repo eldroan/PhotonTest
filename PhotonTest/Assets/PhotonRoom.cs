@@ -7,10 +7,11 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class PhotonRoom : MonoBehaviourPunCallbacks {
+public class PhotonRoom : MonoBehaviourPunCallbacks
+{
 
     // Room info
-    public static PhotonRoom Room =null;
+    public static PhotonRoom Room = null;
     private PhotonView pv;
     public bool isGameLoaded;
     public int currentScene;
@@ -32,21 +33,22 @@ public class PhotonRoom : MonoBehaviourPunCallbacks {
 
     private const int DefaultWaitTimeToStartGameWhenRoomIsFull = 6;
 
-    void Awake () {
-		if(Room == null)
+    void Awake()
+    {
+        if (Room == null)
         {
             Room = this;
         }
         else
         {
-            if(Room != this)
+            if (Room != this)
             {
                 Destroy(Room.gameObject);
                 Room = this;
             }
         }
         DontDestroyOnLoad(this.gameObject);
-	}
+    }
     private void Start()
     {
         pv = GetComponent<PhotonView>();
@@ -70,37 +72,35 @@ public class PhotonRoom : MonoBehaviourPunCallbacks {
     }
 
     // Update is called once per frame
-    void Update () {
-        if (MultiplayerSettings.Instance.delayedStart)
+    void Update()
+    {
+        if (playersInRoom == 1)
         {
-            if(playersInRoom == 1)
+            RestartTimer();
+        }
+        
+        if (isGameLoaded == false)
+        {
+            if (readyToStart)
             {
-                RestartTimer();
+                atMaxPlayer -= Time.deltaTime;
+                lessThanMaxPlayers = atMaxPlayer;
+                timeToStart = atMaxPlayer;
+                Debug.Log("Display time to start to the players " + timeToStart);
             }
-
-            if (isGameLoaded == false)
+            else if (readyToCount)
             {
-                if (readyToStart)
-                {
-                    atMaxPlayer -= Time.deltaTime;
-                    lessThanMaxPlayers = atMaxPlayer;
-                    timeToStart = atMaxPlayer;
-                    Debug.Log("Display time to start to the players " + timeToStart);
-                }
-                else if (readyToCount)
-                {
-                    lessThanMaxPlayers -= Time.deltaTime;
-                    timeToStart = lessThanMaxPlayers;
-                    Debug.Log("Display time to start to the players " + timeToStart);
-                }
-
-                if(timeToStart <= 0)
-                {
-                    StartGame();
-                }
+                lessThanMaxPlayers -= Time.deltaTime;
+                timeToStart = lessThanMaxPlayers;
+                Debug.Log("Display time to start to the players " + timeToStart);
+            }
+        
+            if (timeToStart <= 0)
+            {
+                StartGame();
             }
         }
-	}
+    }
 
 
     public override void OnJoinedRoom() //Este callback se llama cuendo YO entro al room
@@ -114,27 +114,20 @@ public class PhotonRoom : MonoBehaviourPunCallbacks {
         myNumberInRoom = playersInRoom; // Mi numero es el tamaño de la lista porque cuando me uni incremento en uno
         PhotonNetwork.NickName = myNumberInRoom.ToString();
 
-        if (MultiplayerSettings.Instance.delayedStart)
+        Debug.Log("Current players in room " + playersInRoom + " / " + MultiplayerSettings.Instance.maxPlayer);
+        if (playersInRoom > 1)
         {
-            Debug.Log("Current players in room " + playersInRoom + " / " + MultiplayerSettings.Instance.maxPlayer);
-            if(playersInRoom > 1)
-            {
-                readyToCount = true;
-            }
+            readyToCount = true;
+        }
 
-            if(playersInRoom == MultiplayerSettings.Instance.maxPlayer)
-            {
-                readyToStart = true;
-                if(PhotonNetwork.IsMasterClient == false)
-                    return; //No podemos hacer nada porque no somos el master
-                PhotonNetwork.CurrentRoom.IsOpen = false;
-            }
-            
-        }
-        else
+        if (playersInRoom == MultiplayerSettings.Instance.maxPlayer)
         {
-            StartGame();
+            readyToStart = true;
+            if (PhotonNetwork.IsMasterClient == false)
+                return; //No podemos hacer nada porque no somos el master
+            PhotonNetwork.CurrentRoom.IsOpen = false;
         }
+
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer) //Este callback se llama cuando yo estoy en el room y entra otro
@@ -143,23 +136,23 @@ public class PhotonRoom : MonoBehaviourPunCallbacks {
         photonPlayers = PhotonNetwork.PlayerList;
         playersInRoom++;
         Debug.Log("A player has joined the room! " + playersInRoom);
-        if (MultiplayerSettings.Instance.delayedStart)
+        
+        Debug.Log("Current players in room " + playersInRoom + " / " + MultiplayerSettings.Instance.maxPlayer);
+
+        if (playersInRoom > 1)
         {
-            Debug.Log("Current players in room " + playersInRoom + " / " + MultiplayerSettings.Instance.maxPlayer);
-            if (playersInRoom > 1)
-            {
-                readyToCount = true;
-            }
-            if(playersInRoom == MultiplayerSettings.Instance.maxPlayer)
-            {
-                readyToStart = true;
-                if(PhotonNetwork.IsMasterClient == false)
-                {
-                    return;
-                }
-                PhotonNetwork.CurrentRoom.IsOpen = false;
-            }
+            readyToCount = true;
         }
+        if (playersInRoom == MultiplayerSettings.Instance.maxPlayer)
+        {
+            readyToStart = true;
+            if (PhotonNetwork.IsMasterClient == false)
+            {
+                return;
+            }
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+        }
+        
     }
 
     private void StartGame()
@@ -169,16 +162,13 @@ public class PhotonRoom : MonoBehaviourPunCallbacks {
         if (PhotonNetwork.IsMasterClient == false)
             return; //Si no soy el master no tengo que hacer nada
 
-        if (MultiplayerSettings.Instance.delayedStart)
+        if (PhotonNetwork.CurrentRoom.IsOpen)
         {
-            if (PhotonNetwork.CurrentRoom.IsOpen)
-            {
-                PhotonNetwork.CurrentRoom.IsOpen = false;
-            }
-            else
-            {
-                Debug.LogWarning("El room ya estaba cerrado");
-            }
+            PhotonNetwork.CurrentRoom.IsOpen = false;
+        }
+        else
+        {
+            Debug.LogWarning("El room ya estaba cerrado");
         }
 
         PhotonNetwork.LoadLevel(MultiplayerSettings.Instance.multiplayerScene); //El master carga la escena y debido a que lobby tiene AutomaticallySyncScene= true los clientes reciben un mensaje y tambien la cargan
@@ -187,18 +177,12 @@ public class PhotonRoom : MonoBehaviourPunCallbacks {
     private void OnSceneFinishedLoading(Scene scene, LoadSceneMode mode)
     {
         currentScene = scene.buildIndex;
-        if(currentScene == MultiplayerSettings.Instance.multiplayerScene)
+        if (currentScene == MultiplayerSettings.Instance.multiplayerScene)
         {
             isGameLoaded = true;
             Debug.Log("Game loaded");
-            if (MultiplayerSettings.Instance.delayedStart)
-            {
-                pv.RPC("RPC_LoadedGameScene",RpcTarget.MasterClient);
-            }
-            else
-            {
-                RPC_CreatePlayer();
-            }
+            
+            pv.RPC("RPC_LoadedGameScene", RpcTarget.MasterClient);
         }
     }
     private void RestartTimer()
@@ -214,7 +198,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks {
     private void RPC_LoadedGameScene()
     {
         playersInGame++;
-        if(playersInGame == PhotonNetwork.PlayerList.Length)
+        if (playersInGame == PhotonNetwork.PlayerList.Length)
         {
             pv.RPC("RPC_CreatePlayer", RpcTarget.All);
         }
