@@ -9,7 +9,6 @@ public class PhotonLobby : MonoBehaviourPunCallbacks {
 
     public static PhotonLobby lobby;
     public GameObject battleButton;
-    public GameObject cancelButton;
     public Text statusText;
     RoomInfo[] rooms;
 
@@ -54,19 +53,15 @@ public class PhotonLobby : MonoBehaviourPunCallbacks {
     public void OnBattleButtonClicked()
     {
         battleButton.SetActive(false);
-        //cancelButton.SetActive(true);
         PhotonNetwork.JoinRandomRoom(); 
     }
+
     public override void OnJoinedLobby()
     {
         Debug.Log("Se entro a un lobby");
     }
 
     public void OnCancelButtonClicked()
-    {//Ripeado el boton de cancelar
-        //cancelButton.SetActive(false);
-        //battleButton.SetActive(true);
-        //PhotonNetwork.LeaveRoom();
-        
+    {//Nada, no se puede cancelar
     }
 }
