@@ -1,5 +1,6 @@
 ﻿using Constants.Truco;
 using Constants.Truco.Card;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -59,13 +60,27 @@ public static class GameDataSerializer
         serializableGD.player1Cards = new string[gamedata.player1Cards.Count];
         for(int i =0; i < serializableGD.player1Cards.Length; i++)
         {
-            serializableGD.player1Cards[i] = gamedata.player1Cards[i].name;
+            try
+            {
+                serializableGD.player1Cards[i] = gamedata.player1Cards[i].name;
+            }
+            catch(Exception ex)
+            {
+                serializableGD.player1Cards[i] = String.Empty;
+            }
         }
 
         serializableGD.player1PlayedCards = new string[gamedata.player1PlayedCards.Count];
         for (int i = 0; i < serializableGD.player1PlayedCards.Length; i++)
         {
-            serializableGD.player1PlayedCards[i] = gamedata.player1PlayedCards[i].name;
+            try
+            {
+                serializableGD.player1PlayedCards[i] = gamedata.player1PlayedCards[i].name;
+            }
+            catch (Exception ex)
+            {
+                serializableGD.player1PlayedCards[i] = String.Empty;
+            }
         }
         serializableGD.player1EnvidoPoints = gamedata.player1EnvidoPoints;
         serializableGD.player1Flor = gamedata.player1Flor;
@@ -74,12 +89,26 @@ public static class GameDataSerializer
         serializableGD.player2Cards = new string[gamedata.player2Cards.Count];
         for (int i = 0; i < serializableGD.player2Cards.Length; i++)
         {
-            serializableGD.player2Cards[i] = gamedata.player2Cards[i].name;
+            try
+            {
+                serializableGD.player2Cards[i] = gamedata.player2Cards[i].name;
+            }
+            catch (Exception ex)
+            {
+                serializableGD.player2Cards[i] = String.Empty;
+            }
         }
         serializableGD.player2PlayedCards = new string[gamedata.player2PlayedCards.Count];
         for (int i = 0; i < serializableGD.player2PlayedCards.Length; i++)
         {
-            serializableGD.player2PlayedCards[i] = gamedata.player2PlayedCards[i].name;
+            try
+            {
+                serializableGD.player2PlayedCards[i] = gamedata.player2PlayedCards[i].name;
+            }
+            catch (Exception ex)
+            {
+                serializableGD.player2PlayedCards[i] = String.Empty;
+            }
         }
         serializableGD.player2EnvidoPoints = gamedata.player2EnvidoPoints;
         serializableGD.player2Flor = gamedata.player2Flor;
@@ -139,25 +168,53 @@ public static class GameDataSerializer
         gd.player1Cards = new List<Card>();
         for (int i = 0; i < serializableGD.player1Cards.Length; i++)
         {
-            gd.player1Cards.Add(cardCollection[serializableGD.player1Cards[i]]);
+            if(String.Empty.Equals(serializableGD.player1Cards[i]) == false)
+            {
+                gd.player1Cards.Add(cardCollection[serializableGD.player1Cards[i]]);
+            }
+            else
+            {
+                gd.player1Cards.Add(null);
+            }
         }
 
         gd.player1PlayedCards = new List<Card>();
         for (int i = 0; i < serializableGD.player1PlayedCards.Length; i++)
         {
-            gd.player1PlayedCards.Add(cardCollection[serializableGD.player1PlayedCards[i]]);
+            if (String.Empty.Equals(serializableGD.player1PlayedCards[i]) == false)
+            {
+                gd.player1PlayedCards.Add(cardCollection[serializableGD.player1PlayedCards[i]]);
+            }
+            else
+            {
+                gd.player1PlayedCards.Add(null);
+            }
         }
 
         gd.player2Cards = new List<Card>();
         for (int i = 0; i < serializableGD.player2Cards.Length; i++)
         {
-            gd.player2Cards.Add(cardCollection[serializableGD.player2Cards[i]]);
+            if (String.Empty.Equals(serializableGD.player2Cards[i]) == false)
+            {
+                gd.player2Cards.Add(cardCollection[serializableGD.player2Cards[i]]);
+            }
+            else
+            {
+                gd.player2Cards.Add(null);
+            }
         }
 
         gd.player2PlayedCards = new List<Card>();
         for (int i = 0; i < serializableGD.player2PlayedCards.Length; i++)
         {
-            gd.player2PlayedCards.Add(cardCollection[serializableGD.player2PlayedCards[i]]);
+            if (String.Empty.Equals(serializableGD.player2PlayedCards[i]) == false)
+            {
+                gd.player2PlayedCards.Add(cardCollection[serializableGD.player2PlayedCards[i]]);
+            }
+            else
+            {
+                gd.player2PlayedCards.Add(null);
+            }
         }
 
         return gd;
