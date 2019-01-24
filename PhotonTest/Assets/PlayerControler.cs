@@ -12,7 +12,7 @@ public class PlayerControler : MonoBehaviour {
     private PhotonView pv;
     public Text esMiTurno;
     public Text minick;
-    public Data myData;
+    public GameData myData;
 
     // Use this for initialization
     void Awake() {
@@ -30,13 +30,13 @@ public class PlayerControler : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.A))
             {
                 pv.RPC("RPC_PressButton", RpcTarget.All, nick, "A");
-                pv.RPC("RPC_SharedData", RpcTarget.Others, JsonUtility.ToJson(myData));
+                pv.RPC("RPC_SharedData", RpcTarget.Others, GameDataSerializer.Serialize(myData));
                 isMyTurn = false;
             }
             else if (Input.GetKeyDown(KeyCode.S))
             {
                 pv.RPC("RPC_PressButton", RpcTarget.All, nick, "S");
-                pv.RPC("RPC_SharedData", RpcTarget.Others, JsonUtility.ToJson(myData));
+                pv.RPC("RPC_SharedData", RpcTarget.Others, GameDataSerializer.Serialize(myData));
 
                 isMyTurn = false;
             }
@@ -64,6 +64,6 @@ public class PlayerControler : MonoBehaviour {
     [PunRPC]
     private void RPC_SharedData(string jsonDataReceived)
     {
-        myData = JsonUtility.FromJson<Data>(jsonDataReceived);
+        myData = GameDataSerializer.DeSerialize(jsonDataReceived);
     }
 }

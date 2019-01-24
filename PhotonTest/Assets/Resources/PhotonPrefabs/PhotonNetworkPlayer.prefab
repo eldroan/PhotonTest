@@ -121,4 +121,4 @@ MonoBehaviour:
   nick: 
   esMiTurno: {fileID: 0}
   minick: {fileID: 0}
-  myData: {fileID: 11400000, guid: 5775308368163eb4585549ef6e334cda, type: 2}
+  myData: {fileID: 11400000, guid: 30b2ee89eb83e234088efdd4540b7a55, type: 2}
