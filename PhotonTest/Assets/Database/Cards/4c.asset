@@ -8,9 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e41db45cbaa6de4b893acd0e9df80ca, type: 3}
-  m_Name: Data
+  m_Script: {fileID: 11500000, guid: 5cbdd389bc1f0bd4fa1305f92f3b274d, type: 3}
+  m_Name: 4c
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 66efb24ed46044ab8a039599cbc47d7b, type: 3}
-  numero: 222
-  palabra: adsasdasdsa
+  number: 4
+  type: 1
+  image: {fileID: 21300000, guid: 002435c655625d74bbad595357b5b898, type: 3}
+  rank: 1

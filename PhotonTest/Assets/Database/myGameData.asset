@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90901d86a7f955a458e944c5247dd7e5, type: 3}
+  m_Name: myGameData
+  m_EditorClassIdentifier: 
+  myName: Nuevo nick
+  enemyName: VIA Truco
+  myAvatarIndx: 0
+  enemyAvatarIndx: 4
+  florIsActive: 0
+  matchOnCourse: 1
+  gameOnCourse: 1
+  myScore: 2
+  enemyScore: 1
+  maxScore: 30
+  maxTimeToPlay: 60
+  imFirst: 1
+  canPlay: 0
+  mustAnswer: 1
+  myHand:
+  - {fileID: 11400000, guid: 107cab20125bc7646ba17e48d50c7d6d, type: 2}
+  - {fileID: 11400000, guid: 2ab340c4d173def4a8072b2eb8b1f9f9, type: 2}
+  myPlayed:
+  - {fileID: 11400000, guid: e6bc55e64e5a5c7428319eddd9bfc268, type: 2}
+  myEnvidoPoints: 0
+  myFlor: 0
+  myFlorPoints: 0
+  enemyFirst: 0
+  enemyCanPlay: 0
+  enemyMustAnswer: 0
+  enemyHand:
+  - {fileID: 11400000, guid: 78b0fe71ebd9a26449d4e9282070fd72, type: 2}
+  - {fileID: 11400000, guid: cb97030b11542f7479045ac2ff3c560f, type: 2}
+  - {fileID: 11400000, guid: 7180ff5d8e7c15c4a82833ec0deeb7b5, type: 2}
+  enemyPlayed: []
+  enemyEnvidoPoints: 0
+  enemyFlor: 0
+  enemyFlorPoints: 0
+  round: 1
+  trucoState: 1
+  whoCalledLastTruco: 2
+  envidoState: 0
+  whoCalledLastEnvido: 0
+  envidoWinner: 0
+  envidoWinnedPoints: 0
+  florState: 0
+  whoCalledLastFlor: 0
+  florWinner: 0
+  florWinnedPoints: 0
+  handWinner: 0
+  enemyCardBack: {fileID: 0}
+  trucoDeck: {fileID: 11400000, guid: 62cf1659a1dd37e4f9d7b0b81d84a13a, type: 2}
