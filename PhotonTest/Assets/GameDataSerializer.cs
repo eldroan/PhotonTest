@@ -110,7 +110,7 @@ public static class GameDataSerializer
         }
 
         SerializableGameData serializableGD = JsonUtility.FromJson<SerializableGameData>(gamedata);
-        GameData gd = new GameData();
+        GameData gd = ScriptableObject.CreateInstance<GameData>();
         gd.player1Name = serializableGD.player1Name;
         gd.player2Name = serializableGD.player2Name;
         gd.player1AvatarIndx = serializableGD.player1AvatarIndx;
