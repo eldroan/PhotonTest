@@ -30,13 +30,13 @@ public class PlayerControler : MonoBehaviour {
             if (Input.GetKeyDown(KeyCode.A))
             {
                 pv.RPC("RPC_PressButton", RpcTarget.All, nick, "A");
-                pv.RPC("RPC_SharedData", RpcTarget.Others, myData);
+                pv.RPC("RPC_SharedData", RpcTarget.Others, JsonUtility.ToJson(myData));
                 isMyTurn = false;
             }
             else if (Input.GetKeyDown(KeyCode.S))
             {
                 pv.RPC("RPC_PressButton", RpcTarget.All, nick, "S");
-                pv.RPC("RPC_SharedData", RpcTarget.Others, myData);
+                pv.RPC("RPC_SharedData", RpcTarget.Others, JsonUtility.ToJson(myData));
 
                 isMyTurn = false;
             }
@@ -62,8 +62,8 @@ public class PlayerControler : MonoBehaviour {
     }
 
     [PunRPC]
-    private void RPC_SharedData(Data dataReceived)
+    private void RPC_SharedData(string jsonDataReceived)
     {
-        myData = dataReceived;
+        myData = JsonUtility.FromJson<Data>(jsonDataReceived);
     }
 }
