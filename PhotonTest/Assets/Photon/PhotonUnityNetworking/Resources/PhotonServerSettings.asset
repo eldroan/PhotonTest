@@ -34,4 +34,5 @@ MonoBehaviour:
   - RPC_CreatePlayer
   - RPC_LoadedGameScene
   - RPC_PressButton
+  - RPC_SharedData
   DisableAutoOpenWizard: 1

@@ -24,7 +24,7 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
     public int playersInGame;
 
     //Delayed start
-    private bool readyToCount;
+    
     private bool readyToStart;
     public float startingTime;
     private float atMaxPlayer;
@@ -51,7 +51,6 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
     private void Start()
     {
         pv = GetComponent<PhotonView>();
-        readyToCount = false;
         readyToStart = false;
         atMaxPlayer = DefaultWaitTimeToStartGameWhenRoomIsFull; //Cuenta regresiva que arranca de 5
         timeToStart = startingTime;
@@ -93,7 +92,6 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
         }
     }
 
-
     public override void OnJoinedRoom() //Este callback se llama cuendo YO entro al room
     {
         base.OnJoinedRoom();
@@ -105,12 +103,8 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
         myNumberInRoom = playersInRoom; // Mi numero es el tamaño de la lista porque cuando me uni incremento en uno
         PhotonNetwork.NickName = myNumberInRoom.ToString();
 
-        Debug.Log("Current players in room " + playersInRoom + " / " + MultiplayerSettings.Instance.maxPlayer);
-        if (playersInRoom > 1)
-        {
-            readyToCount = true;
-        }
-
+        Debug.Log("Im player " + myNumberInRoom +", Current players in room " + playersInRoom + " / " + MultiplayerSettings.Instance.maxPlayer);
+        
         if (playersInRoom == MultiplayerSettings.Instance.maxPlayer)
         {
             readyToStart = true;
@@ -120,20 +114,20 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
         }
 
     }
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        base.OnPlayerLeftRoom(otherPlayer);
+        Debug.Log("Uh, el player " + (otherPlayer.IsMasterClient ? "MASTER" : "ESCLAVO") + " se fue del room");
+    }
 
     public override void OnPlayerEnteredRoom(Player newPlayer) //Este callback se llama cuando yo estoy en el room y entra otro
     {
         base.OnPlayerEnteredRoom(newPlayer);
         photonPlayers = PhotonNetwork.PlayerList;
         playersInRoom++;
-        Debug.Log("A player has joined the room! " + playersInRoom);
-        
-        Debug.Log("Current players in room " + playersInRoom + " / " + MultiplayerSettings.Instance.maxPlayer);
 
-        if (playersInRoom > 1)
-        {
-            readyToCount = true;
-        }
+        Debug.Log("Im player " + myNumberInRoom + ", Current players in room " + playersInRoom + " / " + MultiplayerSettings.Instance.maxPlayer);
+
         if (playersInRoom == MultiplayerSettings.Instance.maxPlayer)
         {
             readyToStart = true;
@@ -181,7 +175,6 @@ public class PhotonRoom : MonoBehaviourPunCallbacks
         timeToStart = startingTime;
         atMaxPlayer = DefaultWaitTimeToStartGameWhenRoomIsFull;
         readyToStart = false;
-        readyToCount = false;
     }
 
     [PunRPC]
